@@ -6,6 +6,8 @@ import Upload from "components/Upload";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { createProject, getProjects } from "lib/puter.actions";
+import { deleteProject } from "../../lib/puter.actions";
+import { Trash2 } from "lucide-react";
 
 
 export function meta({ }: Route.MetaArgs) {
@@ -56,6 +58,22 @@ export default function Home() {
 
             return true;
   }
+  const handleDelete = async (e: React.MouseEvent, id: string) => {
+  e.stopPropagation();
+  const confirmed = window.confirm('Delete this project? This cannot be undone.');
+  if (!confirmed) return;
+
+  // optimistic UI update: remove from state immediately
+  setProjects(prev => prev.filter(p => p.id !== id));
+
+  const ok = await deleteProject({ id });
+  if (!ok) {
+    
+    alert('Failed to delete project. Please try again.');
+    const fetched = await getProjects();
+    setProjects(fetched);
+  }
+};
   return (
    <div className="home">
           <Navbar />
@@ -117,7 +135,9 @@ export default function Home() {
                           <div key={id} className="project-card group" onClick={() => navigate(`/visualizer/${id}`)}>
                               <div className="preview">
                                   <img  src={renderedImage || sourceImage} alt="Project"
+
                                   />
+                                  
 
                                   <div className="badge">
                                       <span>Community</span>
@@ -131,7 +151,15 @@ export default function Home() {
                                       <div className="meta">
                                           <Clock size={12} />
                                           <span>{new Date(timestamp).toLocaleDateString()}</span>
-                                          <span>By Sayan</span>
+                                          <span>By {name}</span>
+                                           <button
+        className="delete-btn"
+        onClick={(e) => handleDelete(e, id)}
+        title="Delete project"
+        aria-label={`Delete ${name}`}
+      >
+        <Trash2 size={14} />
+      </button>
                                       </div>
                                   </div>
                                   <div className="arrow">

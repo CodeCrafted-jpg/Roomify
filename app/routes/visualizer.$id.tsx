@@ -5,6 +5,8 @@ import {Box, Download, RefreshCcw, Share2, X} from "lucide-react";
 import Button from "../../components/ui/Button";
 import {createProject, getProjectById} from "../../lib/puter.actions";
 import {ReactCompareSlider, ReactCompareSliderImage} from "react-compare-slider";
+import { deleteProject } from "../../lib/puter.actions";
+import { Trash2 } from "lucide-react";
 
 const VisualizerId = () => {
     const { id } = useParams();
