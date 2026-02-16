@@ -156,14 +156,14 @@ export default function Home() {
                                             <Clock size={12} />
                                             <span>{new Date(timestamp).toLocaleDateString()}</span>
                                             <span>By {name}</span>
-                                            <button
+                                            {/* <button
                                                 className="delete-btn"
                                                 onClick={(e) => handleDelete(e, id)}
                                                 title="Delete project"
                                                 aria-label={`Delete ${name}`}
                                             >
                                                 <Trash2 size={14} />
-                                            </button>
+                                            </button> */}
                                         </div>
                                     </div>
                                     <div className="arrow">
