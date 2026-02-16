@@ -62,6 +62,9 @@ export const createProject = async ({ item, visibility = "private" }: CreateProj
     try {
         const response = await puter.workers.exec(`${PUTER_WORKER_URL}/api/projects/save`, {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 project: payload,
                 visibility
@@ -147,6 +150,9 @@ export const deleteProject = async ({ id }: { id: string }): Promise<boolean> =>
   try {
     const response = await puter.workers.exec(`${PUTER_WORKER_URL}/api/projects/delete`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ id }),
     });
 
