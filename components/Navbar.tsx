@@ -1,11 +1,12 @@
 
 import {Box} from "lucide-react"
 import Button from './ui/Button'
-import { useOutletContext } from "react-router"
+import { useNavigate, useOutletContext } from "react-router"
 
 
 const Navbar=()=>{
   const {isSignedIn,userName,signOut,signIn}= useOutletContext<AuthContext>();
+  const navigate = useNavigate();
   const handleAuthCLick = async () => {
     if (isSignedIn) {
         try {
@@ -28,7 +29,7 @@ const Navbar=()=>{
                 <div className="left">
                     <div className="brand">
                         <Box className={"logo"}/>
-                       <span className={"name"}>
+                       <span className={"name"} onClick={() => navigate('/')}>
                            Roomify
                        </span>
                     </div>

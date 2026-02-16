@@ -4,8 +4,8 @@ import { ArrowBigDown, ArrowRight, ArrowUpRight, Clock, Layers } from "lucide-re
 import Button from "components/ui/Button";
 import Upload from "components/Upload";
 import { useNavigate } from "react-router";
-import { useState } from "react";
-import { createProject } from "lib/puter.actions";
+import { useState, useEffect } from "react";
+import { createProject, getProjects } from "lib/puter.actions";
 
 
 export function meta({ }: Route.MetaArgs) {
@@ -18,6 +18,15 @@ export function meta({ }: Route.MetaArgs) {
 export default function Home() {
   const navigate = useNavigate();
   const [projects, setProjects] = useState<DesignItem[]>([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const fetchedProjects = await getProjects();
+      setProjects(fetchedProjects);
+    };
+
+    fetchProjects();
+  }, []);
 
   const handleUploadComplete = async (base64Image: string) => {
     const newId = Date.now().toString();
